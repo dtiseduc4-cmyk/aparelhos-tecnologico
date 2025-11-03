@@ -45,45 +45,48 @@
 
   <main>
     <!-- Página 1: Cadastro -->
-    <section id="paginaCadastro" class="pagina ativa">
-      <h2>Cadastro de Equipamentos</h2>
-      <form id="formCadastro">
-        <input type="hidden" id="editingId" name="editingId">
-        <label>Nome da Escola:</label>
-        <input type="text" name="nomeEscola" required>
+<section id="paginaCadastro" class="pagina ativa">
+  <h2>Cadastro de Equipamentos</h2>
+  <form id="formCadastro">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="equipamento">Equipamento:</label>
+        <input type="text" id="equipamento" name="equipamento" placeholder="Ex: Notebook Dell Inspiron" required>
+      </div>
 
-        <label>Quantidade de Roteadores:</label>
-        <input type="number" name="roteadores" min="0">
+      <div class="form-group">
+        <label for="numeroSerie">Número de Série:</label>
+        <input type="text" id="numeroSerie" name="numeroSerie" placeholder="Ex: SN-12345678" required>
+      </div>
 
-        <label>Quantidade de Switchs:</label>
-        <input type="number" name="switchs" min="0">
-
-        <label>Quantidade de Leitores Biométricos:</label>
-        <input type="number" name="leitores" min="0">
-
-        <label>Provedor:</label>
-        <input type="text" name="provedor">
-
-        <label>Medidor:</label>
-        <input type="text" name="medidor">
-
-        <label>Solicitação / Observações:</label>
-        <textarea name="solicitacao" rows="3"></textarea>
-
-        <label>Status:</label>
-        <select name="status" required>
-          <option value="">Selecione...</option>
-          <option value="Pendente">Pendente</option>
-          <option value="Resolvido">Resolvido</option>
-          <option value="Sem pendência">Sem pendência</option>
+      <div class="form-group">
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+          <option value="">Selecione</option>
+          <option value="Disponível">Disponível</option>
+          <option value="Em Uso">Em Uso</option>
+          <option value="Manutenção">Manutenção</option>
         </select>
+      </div>
 
-        <div class="botoes">
-          <button id="btnSalvar" type="submit">Salvar Cadastro</button>
-          <button type="button" id="btnCancelarEdicao" class="hide">Cancelar Edição</button>
-        </div>
-      </form>
-    </section>
+      <div class="form-group">
+        <label for="localizacao">Localização:</label>
+        <input type="text" id="localizacao" name="localizacao" placeholder="Ex: Laboratório 1 - Bloco B" required>
+      </div>
+
+      <div class="form-group form-full">
+        <label for="observacoes">Observações:</label>
+        <textarea id="observacoes" name="observacoes" placeholder="Insira informações adicionais sobre o equipamento..."></textarea>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="btnSalvar" type="submit">Salvar</button>
+      <button id="btnCancelarEdicao" type="button" class="hide">Cancelar Edição</button>
+    </div>
+  </form>
+</section>
+
 
     <!-- Página 2: Consulta -->
     <section id="paginaConsulta" class="pagina">
@@ -136,3 +139,4 @@
   <script type="module" src="script.js"></script>
 </body>
 </html>
+
