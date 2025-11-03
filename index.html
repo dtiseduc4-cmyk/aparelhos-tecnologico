@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Parque Tecnológico das Escolas</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 
   <!-- Firebase -->
   <script type="module">
@@ -19,16 +19,15 @@
       storageBucket: "aparelhos-tecnologicos.firebasestorage.app",
       messagingSenderId: "856637181859",
       appId: "1:856637181859:web:22582e4499a2186ae65416",
-      measurementId: "G-M1WS039T3Q"
+      measurementId: "G-M1WS039T3Q",
     };
 
-    // Inicializa o Firebase
     const app = initializeApp(firebaseConfig);
     try { getAnalytics(app); } catch (e) {}
     window.db = getFirestore(app);
   </script>
 
-  <!-- jsPDF para exportação -->
+  <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 </head>
@@ -37,50 +36,88 @@
   <header>
     <h1>Parque Tecnológico das Escolas</h1>
     <nav>
-      <a href="#" id="menuCadastro" class="active">Cadastro</a>
+      <a href="#" id="menuInstitucional" class="active">Institucional</a>
+      <a href="#" id="menuCadastro">Cadastro</a>
       <a href="#" id="menuConsulta">Consulta</a>
       <a href="#" id="menuClassificacao">Classificação</a>
     </nav>
   </header>
 
   <main>
+    <!-- Página 0: Institucional -->
+    <section id="paginaInstitucional" class="pagina ativa">
+      <div class="institucional">
+        <img src="https://cdn-icons-png.flaticon.com/512/2981/2981297.png" alt="Logo do Projeto" class="logo" />
+        <h2>Bem-vindo ao Sistema de Gestão Tecnológica</h2>
+        <p>
+          O <strong>Parque Tecnológico das Escolas</strong> tem como objetivo monitorar e gerenciar os equipamentos tecnológicos 
+          das instituições educacionais, garantindo uma infraestrutura moderna e eficiente.
+        </p>
+        <p>
+          Aqui, você pode realizar o <strong>cadastro</strong> de equipamentos, consultar registros e acompanhar o 
+          <strong>status das solicitações</strong> em tempo real.
+        </p>
+        <button id="btnAcessarSistema">Acessar o Sistema</button>
+      </div>
+    </section>
+
     <!-- Página 1: Cadastro -->
-<section id="paginaCadastro" class="pagina ativa">
+    <section id="paginaCadastro" class="pagina">
       <h2>Cadastro de Equipamentos</h2>
+
       <form id="formCadastro">
         <input type="hidden" id="editingId" name="editingId">
-        <label>Nome da Escola:</label>
-        <input type="text" name="nomeEscola" required>
 
-        <label>Quantidade de Roteadores:</label>
-        <input type="number" name="roteadores" min="0">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="nomeEscola">🏫 Nome da Escola</label>
+            <input type="text" id="nomeEscola" name="nomeEscola" placeholder="Digite o nome da escola" required>
+          </div>
 
-        <label>Quantidade de Switchs:</label>
-        <input type="number" name="switchs" min="0">
+          <div class="form-group">
+            <label for="roteadores">📶 Quantidade de Roteadores</label>
+            <input type="number" id="roteadores" name="roteadores" min="0" placeholder="Ex: 2">
+          </div>
 
-        <label>Quantidade de Leitores Biométricos:</label>
-        <input type="number" name="leitores" min="0">
+          <div class="form-group">
+            <label for="switchs">🔌 Quantidade de Switches</label>
+            <input type="number" id="switchs" name="switchs" min="0" placeholder="Ex: 1">
+          </div>
 
-        <label>Provedor:</label>
-        <input type="text" name="provedor">
+          <div class="form-group">
+            <label for="leitores">🖐️ Leitores Biométricos</label>
+            <input type="number" id="leitores" name="leitores" min="0" placeholder="Ex: 3">
+          </div>
 
-        <label>Medidor:</label>
-        <input type="text" name="medidor">
+          <div class="form-group">
+            <label for="provedor">🌐 Provedor de Internet</label>
+            <input type="text" id="provedor" name="provedor" placeholder="Digite o nome do provedor">
+          </div>
 
-        <label>Solicitação / Observações:</label>
-        <textarea name="solicitacao" rows="3"></textarea>
+          <div class="form-group">
+            <label for="medidor">⚡ Medidor</label>
+            <input type="text" id="medidor" name="medidor" placeholder="Número do medidor">
+          </div>
 
-        <label>Status:</label>
-        <select name="status" required>
-          <option value="">Selecione...</option>
-          <option value="Pendente">Pendente</option>
-          <option value="Resolvido">Resolvido</option>
-          <option value="Sem pendência">Sem pendência</option>
-        </select>
+          <div class="form-group full">
+            <label for="solicitacao">📝 Solicitação / Observações</label>
+            <textarea id="solicitacao" name="solicitacao" rows="3" placeholder="Descreva a solicitação ou observações"></textarea>
+          </div>
 
-        <div class="botoes">
-          <button id="btnSalvar" type="submit">Salvar Cadastro</button>
-          <button type="button" id="btnCancelarEdicao" class="hide">Cancelar Edição</button>
+          <div class="form-group">
+            <label for="status">📋 Status</label>
+            <select id="status" name="status" required>
+              <option value="">Selecione...</option>
+              <option value="Pendente">Pendente</option>
+              <option value="Resolvido">Resolvido</option>
+              <option value="Sem pendência">Sem pendência</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="btnSalvar" type="submit">💾 Salvar Cadastro</button>
+          <button type="button" id="btnCancelarEdicao" class="hide">❌ Cancelar Edição</button>
         </div>
       </form>
     </section>
@@ -129,12 +166,12 @@
     </section>
   </main>
 
-  <!-- Toasts -->
   <div id="toasts"></div>
 
-  <!-- Script principal -->
+  <footer>
+    <p>© 2025 Parque Tecnológico das Escolas — Desenvolvido para Gestão Educacional</p>
+  </footer>
+
   <script type="module" src="script.js"></script>
 </body>
 </html>
-
-
