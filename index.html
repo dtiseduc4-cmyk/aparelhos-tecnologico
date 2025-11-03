@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parque Tecnológico das Escolas</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDy5RrvnwBf0s4LyBlN5LzvySxscgGslxI",
+      authDomain: "aparelhos-tecnologicos.firebaseapp.com",
+      projectId: "aparelhos-tecnologicos",
+      storageBucket: "aparelhos-tecnologicos.firebasestorage.app",
+      messagingSenderId: "856637181859",
+      appId: "1:856637181859:web:22582e4499a2186ae65416",
+      measurementId: "G-M1WS039T3Q"
+    };
+
+    // Inicializa o Firebase
+    const app = initializeApp(firebaseConfig);
+    try { getAnalytics(app); } catch (e) {}
+    window.db = getFirestore(app);
+  </script>
+
+  <!-- jsPDF para exportação -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>Parque Tecnológico das Escolas</h1>
+    <nav>
+      <a href="#" id="menuCadastro" class="active">Cadastro</a>
+      <a href="#" id="menuConsulta">Consulta</a>
+      <a href="#" id="menuClassificacao">Classificação</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Página 1: Cadastro -->
+    <section id="paginaCadastro" class="pagina ativa">
+      <h2>Cadastro de Equipamentos</h2>
+      <form id="formCadastro">
+        <input type="hidden" id="editingId" name="editingId">
+        <label>Nome da Escola:</label>
+        <input type="text" name="nomeEscola" required>
+
+        <label>Quantidade de Roteadores:</label>
+        <input type="number" name="roteadores" min="0">
+
+        <label>Quantidade de Switchs:</label>
+        <input type="number" name="switchs" min="0">
+
+        <label>Quantidade de Leitores Biométricos:</label>
+        <input type="number" name="leitores" min="0">
+
+        <label>Provedor:</label>
+        <input type="text" name="provedor">
+
+        <label>Medidor:</label>
+        <input type="text" name="medidor">
+
+        <label>Solicitação / Observações:</label>
+        <textarea name="solicitacao" rows="3"></textarea>
+
+        <label>Status:</label>
+        <select name="status" required>
+          <option value="">Selecione...</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Resolvido">Resolvido</option>
+          <option value="Sem pendência">Sem pendência</option>
+        </select>
+
+        <div class="botoes">
+          <button id="btnSalvar" type="submit">Salvar Cadastro</button>
+          <button type="button" id="btnCancelarEdicao" class="hide">Cancelar Edição</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Página 2: Consulta -->
+    <section id="paginaConsulta" class="pagina">
+      <h2>Consulta de Registros</h2>
+      <input type="text" id="pesquisaConsulta" placeholder="Pesquisar...">
+
+      <table id="tabelaConsulta">
+        <thead>
+          <tr>
+            <th>Escola</th>
+            <th>Roteadores</th>
+            <th>Switchs</th>
+            <th>Leitores</th>
+            <th>Provedor</th>
+            <th>Medidor</th>
+            <th>Solicitação</th>
+            <th>Status</th>
+            <th>Data</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <button id="btnExportar">Exportar PDF</button>
+    </section>
+
+    <!-- Página 3: Classificação -->
+    <section id="paginaClassificacao" class="pagina">
+      <h2>Classificação por Status</h2>
+      <input type="text" id="pesquisaClassificacao" placeholder="Pesquisar...">
+
+      <table id="tabelaClassificacao">
+        <thead>
+          <tr>
+            <th>Escola</th>
+            <th>Solicitação</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Toasts -->
+  <div id="toasts"></div>
+
+  <!-- Script principal -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>
