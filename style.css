@@ -48,7 +48,7 @@ nav {
 nav a {
   text-decoration: none;
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.2rem;
   border-radius: 8px;
   transition: all 0.25s ease;
   font-weight: 500;
@@ -90,23 +90,71 @@ main {
 }
 
 /* ------------------------------------
-   Formulário institucional (corrigido)
+   Página institucional
+-------------------------------------*/
+.institucional {
+  background: #fff;
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  text-align: center;
+  max-width: 800px;
+  margin: 3rem auto;
+  animation: fadeIn 0.5s ease;
+}
+
+.institucional .logo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.institucional h2 {
+  color: #0d47a1;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.institucional p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.institucional button {
+  margin-top: 1.5rem;
+  background-color: #1565c0;
+  color: #fff;
+  border: none;
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.institucional button:hover {
+  background-color: #0d47a1;
+  transform: scale(1.02);
+}
+
+/* ------------------------------------
+   Formulário aprimorado
 -------------------------------------*/
 form {
   background: #ffffff;
   padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin-top: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  margin-top: 1.5rem;
 }
 
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem 2rem;
 }
 
 .form-group {
@@ -114,83 +162,77 @@ form {
   flex-direction: column;
 }
 
+.form-group.full {
+  grid-column: 1 / -1;
+}
+
 .form-group label {
   font-weight: 600;
-  color: #0d47a1;
   margin-bottom: 0.4rem;
+  color: #0d47a1;
   font-size: 0.95rem;
 }
 
-form input,
-form select,
-form textarea {
-  width: 100%;
+.form-group input,
+.form-group select,
+.form-group textarea {
   padding: 0.75rem;
   border: 1px solid #ccd3e0;
   border-radius: 8px;
   font-size: 0.95rem;
   background-color: #f9fbff;
-  transition: border-color 0.3s, background-color 0.3s;
+  transition: border-color 0.25s, box-shadow 0.25s;
 }
 
-form input:focus,
-form select:focus,
-form textarea:focus {
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
   border-color: #1565c0;
-  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(21,101,192,0.1);
   outline: none;
-}
-
-.form-full {
-  grid-column: 1 / -1;
-}
-
-form textarea {
-  resize: vertical;
-  min-height: 100px;
+  background-color: #fff;
 }
 
 .actions {
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
   flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
-button {
-  border: none;
-  border-radius: 8px;
-  padding: 0.75rem 1.8rem;
-  cursor: pointer;
+.actions button {
+  padding: 0.8rem 1.8rem;
+  font-size: 1rem;
   font-weight: 600;
-  font-size: 0.95rem;
-  transition: background-color 0.3s, transform 0.1s;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.1s, background-color 0.25s;
 }
 
-button#btnSalvar {
+#btnSalvar {
   background-color: #1565c0;
-  color: white;
+  color: #fff;
 }
 
-button#btnSalvar:hover {
+#btnSalvar:hover {
   background-color: #0d47a1;
+  transform: scale(1.02);
 }
 
-button#btnCancelarEdicao {
+#btnCancelarEdicao {
   background-color: #c62828;
-  color: white;
+  color: #fff;
 }
 
-button#btnCancelarEdicao:hover {
+#btnCancelarEdicao:hover {
   background-color: #8e0000;
+  transform: scale(1.02);
 }
 
 button.hide {
   display: none;
-}
-
-button:active {
-  transform: scale(0.97);
 }
 
 /* ------------------------------------
@@ -261,42 +303,38 @@ tr:hover {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   gap: 1rem;
 }
 
-.pesquisa input[type="text"] {
+.pesquisa input[type="text"],
+input#pesquisaConsulta,
+input#pesquisaClassificacao {
   flex: 1;
   min-width: 260px;
-  padding: 0.7rem;
+  padding: 0.6rem;
   border: 1px solid #ccd3e0;
   border-radius: 8px;
   background-color: #f9fbff;
   font-size: 0.95rem;
 }
 
-.pesquisa button {
+.pesquisa button,
+#btnExportar {
   background-color: #0d47a1;
   color: white;
-  font-weight: 500;
-  padding: 0.7rem 1.4rem;
+  border: none;
+  padding: 0.6rem 1.2rem;
   border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
 }
 
-.pesquisa button:hover {
+.pesquisa button:hover,
+#btnExportar:hover {
   background-color: #08306b;
-}
-
-/* ------------------------------------
-   Rodapé
--------------------------------------*/
-footer {
-  text-align: center;
-  padding: 1rem;
-  background-color: #0d47a1;
-  color: white;
-  font-size: 0.9rem;
-  margin-top: auto;
+  transform: scale(1.02);
 }
 
 /* ------------------------------------
@@ -335,6 +373,18 @@ footer {
 }
 
 /* ------------------------------------
+   Rodapé
+-------------------------------------*/
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #0d47a1;
+  color: white;
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+/* ------------------------------------
    Responsivo
 -------------------------------------*/
 @media (max-width: 768px) {
@@ -342,11 +392,15 @@ footer {
     padding: 1rem;
   }
 
+  form {
+    padding: 1.5rem;
+  }
+
   .form-grid {
     grid-template-columns: 1fr;
   }
 
-  .form-full {
+  .form-group.full {
     grid-column: 1;
   }
 
@@ -356,5 +410,10 @@ footer {
 
   th, td {
     font-size: 0.85rem;
+  }
+
+  .institucional {
+    margin: 1.5rem 1rem;
+    padding: 2rem 1.5rem;
   }
 }
