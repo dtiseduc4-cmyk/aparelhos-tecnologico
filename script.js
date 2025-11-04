@@ -56,6 +56,23 @@ menuLinks.forEach(link => {
     if (alvo === "paginaClassificacao") carregarClassificacao();
   });
 });
+// -----------------------------
+// Botão "Acessar o Sistema"
+// -----------------------------
+const btnAcessarSistema = document.getElementById("btnAcessarSistema");
+if (btnAcessarSistema) {
+  btnAcessarSistema.addEventListener("click", () => {
+    // Oculta todas as páginas
+    paginas.forEach(p => p.classList.remove("ativa"));
+    // Mostra a página de cadastro
+    document.getElementById("paginaCadastro").classList.add("ativa");
+
+    // Atualiza o menu ativo
+    menuLinks.forEach(l => l.classList.remove("active"));
+    document.getElementById("menuCadastro").classList.add("active");
+  });
+}
+
 
 // -----------------------------
 // Toasts simples
@@ -303,3 +320,4 @@ btnExportar.addEventListener("click", () => {
 // -----------------------------
 carregarConsulta();
 carregarClassificacao();
+
