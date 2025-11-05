@@ -135,14 +135,30 @@ btnCancelarEdicao.addEventListener("click", () => {
 // -----------------------------
 // Carregar tabela de consulta
 // -----------------------------
+// -----------------------------
+// Carregar tabela de consulta (com contadores)
+// -----------------------------
 async function carregarConsulta() {
   tabelaConsultaBody.innerHTML = "";
+
+  // Elementos de contagem (caso o usuário esteja em outra aba)
+  const totalEscolasEl = document.getElementById("totalEscolas");
+  const totalPendentesEl = document.getElementById("totalPendentes");
+
+  let totalEscolas = 0;
+  let totalPendentes = 0;
+
   try {
     const q = query(collection(db, collectionName), orderBy("nomeEscola"));
     const snap = await getDocs(q);
+
     snap.forEach(docSnap => {
       const d = docSnap.data();
       const id = docSnap.id;
+
+      totalEscolas++;
+      if (d.status === "Pendente") totalPendentes++;
+
       const tr = document.createElement("tr");
 
       const corClass =
@@ -168,11 +184,17 @@ async function carregarConsulta() {
       `;
       tabelaConsultaBody.appendChild(tr);
     });
+
+    // Atualiza os contadores no topo da aba
+    if (totalEscolasEl) totalEscolasEl.textContent = totalEscolas;
+    if (totalPendentesEl) totalPendentesEl.textContent = totalPendentes;
+
   } catch (err) {
     console.error(err);
     toast("❌ Erro ao carregar dados.", "error");
   }
 }
+
 
 // -----------------------------
 // Carregar tabela de classificação
@@ -320,4 +342,5 @@ btnExportar.addEventListener("click", () => {
 // -----------------------------
 carregarConsulta();
 carregarClassificacao();
+
 
