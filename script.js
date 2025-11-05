@@ -173,6 +173,7 @@ async function carregarConsulta() {
         <td>${d.switchs ?? ""}</td>
         <td>${d.leitores ?? ""}</td>
         <td>${d.provedor || ""}</td>
+        <td>${d.megas || ""}</td> 
         <td>${d.medidor || ""}</td>
         <td style="max-width:240px;white-space:pre-wrap">${d.solicitacao || ""}</td>
         <td class="${corClass}">${d.status || ""}</td>
@@ -247,6 +248,7 @@ document.querySelector("#tabelaConsulta tbody").addEventListener("click", async 
       form.switchs.value = d.switchs ?? "";
       form.leitores.value = d.leitores ?? "";
       form.provedor.value = d.provedor || "";
+      form.megas.value = d.megas ?? "";
       form.medidor.value = d.medidor || "";
       form.solicitacao.value = d.solicitacao || "";
       form.status.value = d.status || "";
@@ -306,10 +308,11 @@ btnExportar.addEventListener("click", () => {
       cols[2].innerText,
       cols[3].innerText,
       cols[4].innerText,
-      cols[5].innerText,
+      cols[5].innerText, // Megas
       cols[6].innerText,
       cols[7].innerText,
-      cols[8].innerText
+      cols[8].innerText,
+      cols[9].innerText
     ];
   });
 
@@ -325,7 +328,7 @@ btnExportar.addEventListener("click", () => {
   docPDF.autoTable({
     startY: 28,
     head: [[
-      "Escola","Roteadores","Switchs","Leitores","Provedor","Medidor","Solicitação","Status","Data"
+      "Escola","Roteadores","Switchs","Leitores","Provedor","Megas","Medidor","Solicitação","Status","Data"
     ]],
     body: dados,
     styles: { fontSize: 9, cellPadding: 3 },
@@ -342,5 +345,6 @@ btnExportar.addEventListener("click", () => {
 // -----------------------------
 carregarConsulta();
 carregarClassificacao();
+
 
 
