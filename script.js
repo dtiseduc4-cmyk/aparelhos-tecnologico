@@ -326,18 +326,36 @@ btnExportar.addEventListener("click", () => {
   docPDF.text(`Gerado em: ${hoje}`, 14, 22);
 
   docPDF.autoTable({
-    startY: 28,
-    head: [[
-      "Escola","Roteadores","Switchs","Leitores","Provedor","Megas","Medidor","Solicitação","Status","Data"
-    ]],
-    body: dados,
-    styles: { fontSize: 9, cellPadding: 3 },
-    headStyles: { fillColor: [240,240,240] },
-    theme: "grid"
-  });
+  startY: 28,
+  head: [[
+    "Escola", "Roteadores", "Switchs", "Leitores", "Provedor", "Megas", "Medidor", "Solicitação", "Status", "Data"
+  ]],
+  body: dados,
+  theme: "grid",
+  styles: {
+    fontSize: 9,
+    cellPadding: 3,
+    halign: "center",
+    valign: "middle",
+    textColor: [0, 0, 0],       // texto preto
+    lineColor: [60, 60, 60],    // bordas mais visíveis
+    lineWidth: 0.1
+  },
+  headStyles: {
+    fillColor: [52, 152, 219],  // azul mais forte no cabeçalho
+    textColor: [255, 255, 255], // texto branco
+    fontStyle: "bold"
+  },
+  alternateRowStyles: {
+    fillColor: [245, 245, 245]  // cinza claro alternado
+  },
+  tableLineColor: [0, 0, 0],
+  tableLineWidth: 0.1
+});
 
-  docPDF.save(`relatorio_aparelhos_tecnologicos_${Date.now()}.pdf`);
-  toast("✅ PDF gerado.", "success");
+docPDF.save(`relatorio_aparelhos_tecnologicos_${Date.now()}.pdf`);
+toast("✅ PDF gerado.", "success");
+
 });
 
 // -----------------------------
@@ -345,6 +363,7 @@ btnExportar.addEventListener("click", () => {
 // -----------------------------
 carregarConsulta();
 carregarClassificacao();
+
 
 
 
