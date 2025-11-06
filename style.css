@@ -430,5 +430,26 @@ footer {
 .resumo p {
   margin: 0;
 }
+.actions-top {
+  display: flex;
+  justify-content: flex-end; /* botão no canto direito */
+  margin-bottom: 10px;
+}
+
+#btnExportar {
+  background-color: #3498db; /* azul principal */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+#btnExportar:hover {
+  background-color: #217dbb;
+}
+
 
 
