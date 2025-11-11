@@ -56,23 +56,19 @@ menuLinks.forEach(link => {
     if (alvo === "paginaClassificacao") carregarClassificacao();
   });
 });
+
 // -----------------------------
 // Botão "Acessar o Sistema"
 // -----------------------------
 const btnAcessarSistema = document.getElementById("btnAcessarSistema");
 if (btnAcessarSistema) {
   btnAcessarSistema.addEventListener("click", () => {
-    // Oculta todas as páginas
     paginas.forEach(p => p.classList.remove("ativa"));
-    // Mostra a página de cadastro
     document.getElementById("paginaCadastro").classList.add("ativa");
-
-    // Atualiza o menu ativo
     menuLinks.forEach(l => l.classList.remove("active"));
     document.getElementById("menuCadastro").classList.add("active");
   });
 }
-
 
 // -----------------------------
 // Toasts simples
@@ -96,11 +92,11 @@ form.addEventListener("submit", async e => {
   data.roteadores = data.roteadores ? Number(data.roteadores) : 0;
   data.switchs = data.switchs ? Number(data.switchs) : 0;
   data.leitores = data.leitores ? Number(data.leitores) : 0;
+  data.megas = data.megas ? Number(data.megas) : 0;
 
   const editingId = editingIdInput.value;
   try {
     if (editingId) {
-      // Atualizar documento existente
       const docRef = doc(db, collectionName, editingId);
       await updateDoc(docRef, data);
       toast("✅ Cadastro atualizado.", "success");
@@ -108,7 +104,6 @@ form.addEventListener("submit", async e => {
       editingIdInput.value = "";
       document.getElementById("btnSalvar").textContent = "Salvar Cadastro";
     } else {
-      // Novo documento
       await addDoc(collection(db, collectionName), {
         ...data,
         createdAt: serverTimestamp()
@@ -135,13 +130,8 @@ btnCancelarEdicao.addEventListener("click", () => {
 // -----------------------------
 // Carregar tabela de consulta
 // -----------------------------
-// -----------------------------
-// Carregar tabela de consulta (com contadores)
-// -----------------------------
 async function carregarConsulta() {
   tabelaConsultaBody.innerHTML = "";
-
-  // Elementos de contagem (caso o usuário esteja em outra aba)
   const totalEscolasEl = document.getElementById("totalEscolas");
   const totalPendentesEl = document.getElementById("totalPendentes");
 
@@ -160,44 +150,39 @@ async function carregarConsulta() {
       if (d.status === "Pendente") totalPendentes++;
 
       const tr = document.createElement("tr");
-
       const corClass =
         d.status === "Pendente" ? "status-red" :
         d.status === "Resolvido" || d.status === "Sem pendência" ? "status-green" : "";
 
       const createdAt = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate().toLocaleString() : "";
 
-     tr.innerHTML = `
-  <td>${d.nomeEscola || ""}</td>
-  <td>${d.roteadores ?? ""}</td>
-  <td>${d.switchs ?? ""}</td>
-  <td>${d.leitores ?? ""}</td>
-  <td>${d.provedor || ""}</td>
-  <td>${d.tipoConexao || ""}</td>
-  <td>${d.megas || ""}</td>
-  <td>${d.medidor || ""}</td>
-  <td style="max-width:240px;white-space:pre-wrap">${d.solicitacao || ""}</td>
-  <td class="${corClass}">${d.status || ""}</td>
-  <td>${createdAt}</td>
-  <td>
-    <button class="action-btn" data-action="edit" data-id="${id}">Editar</button>
-    <button class="action-btn" data-action="delete" data-id="${id}">Excluir</button>
-  </td>
-`;
-
+      tr.innerHTML = `
+        <td>${d.nomeEscola || ""}</td>
+        <td>${d.roteadores ?? ""}</td>
+        <td>${d.switchs ?? ""}</td>
+        <td>${d.leitores ?? ""}</td>
+        <td>${d.provedor || ""}</td>
+        <td>${d.tipoConexao || ""}</td>
+        <td>${d.megas || ""}</td>
+        <td>${d.medidor || ""}</td>
+        <td style="max-width:240px;white-space:pre-wrap">${d.solicitacao || ""}</td>
+        <td class="${corClass}">${d.status || ""}</td>
+        <td>${createdAt}</td>
+        <td>
+          <button class="action-btn" data-action="edit" data-id="${id}">Editar</button>
+          <button class="action-btn" data-action="delete" data-id="${id}">Excluir</button>
+        </td>
+      `;
       tabelaConsultaBody.appendChild(tr);
     });
 
-    // Atualiza os contadores no topo da aba
     if (totalEscolasEl) totalEscolasEl.textContent = totalEscolas;
     if (totalPendentesEl) totalPendentesEl.textContent = totalPendentes;
-
   } catch (err) {
     console.error(err);
     toast("❌ Erro ao carregar dados.", "error");
   }
 }
-
 
 // -----------------------------
 // Carregar tabela de classificação
@@ -238,22 +223,24 @@ document.querySelector("#tabelaConsulta tbody").addEventListener("click", async 
   if (!action || !id) return;
 
   if (action === "edit") {
-    // Preencher form com dados do documento
     try {
       const snap = await getDocs(query(collection(db, collectionName)));
       let found = null;
       snap.forEach(s => { if (s.id === id) found = { id: s.id, data: s.data() }; });
       if (!found) { toast("Documento não encontrado.", "error"); return; }
+
       const d = found.data;
       form.nomeEscola.value = d.nomeEscola || "";
       form.roteadores.value = d.roteadores ?? "";
       form.switchs.value = d.switchs ?? "";
       form.leitores.value = d.leitores ?? "";
       form.provedor.value = d.provedor || "";
+      form.tipoConexao.value = d.tipoConexao || "";
       form.megas.value = d.megas ?? "";
       form.medidor.value = d.medidor || "";
       form.solicitacao.value = d.solicitacao || "";
       form.status.value = d.status || "";
+
       editingIdInput.value = id;
       document.getElementById("btnSalvar").textContent = "Atualizar Cadastro";
       btnCancelarEdicao.classList.remove("hide");
@@ -294,7 +281,7 @@ pesquisaClassificacao.addEventListener("input", (e) => {
 });
 
 // -----------------------------
-// Exportar PDF
+// Exportar PDF (inclui Tipo de Conexão)
 // -----------------------------
 btnExportar.addEventListener("click", () => {
   const linhas = Array.from(document.querySelectorAll("#tabelaConsulta tbody tr"))
@@ -305,16 +292,17 @@ btnExportar.addEventListener("click", () => {
   const dados = linhas.map(tr => {
     const cols = tr.querySelectorAll("td");
     return [
-      cols[0].innerText,
-      cols[1].innerText,
-      cols[2].innerText,
-      cols[3].innerText,
-      cols[4].innerText,
-      cols[5].innerText, // Megas
-      cols[6].innerText,
-      cols[7].innerText,
-      cols[8].innerText,
-      cols[9].innerText
+      cols[0].innerText, // Escola
+      cols[1].innerText, // Roteadores
+      cols[2].innerText, // Switchs
+      cols[3].innerText, // Leitores
+      cols[4].innerText, // Provedor
+      cols[5].innerText, // Tipo de Conexão
+      cols[6].innerText, // Megas
+      cols[7].innerText, // Medidor
+      cols[8].innerText, // Solicitação
+      cols[9].innerText, // Status
+      cols[10].innerText // Data
     ];
   });
 
@@ -328,36 +316,29 @@ btnExportar.addEventListener("click", () => {
   docPDF.text(`Gerado em: ${hoje}`, 14, 22);
 
   docPDF.autoTable({
-  startY: 28,
-  head: [[
-    "Escola", "Roteadores", "Switchs", "Leitores", "Provedor", "Megas", "Medidor", "Solicitação", "Status", "Data"
-  ]],
-  body: dados,
-  theme: "grid",
-  styles: {
-    fontSize: 9,
-    cellPadding: 3,
-    halign: "center",
-    valign: "middle",
-    textColor: [0, 0, 0],       // texto preto
-    lineColor: [60, 60, 60],    // bordas mais visíveis
-    lineWidth: 0.1
-  },
-  headStyles: {
-    fillColor: [52, 152, 219],  // azul mais forte no cabeçalho
-    textColor: [255, 255, 255], // texto branco
-    fontStyle: "bold"
-  },
-  alternateRowStyles: {
-    fillColor: [245, 245, 245]  // cinza claro alternado
-  },
-  tableLineColor: [0, 0, 0],
-  tableLineWidth: 0.1
-});
+    startY: 28,
+    head: [[
+      "Escola", "Roteadores", "Switchs", "Leitores", "Provedor", "Tipo de Conexão",
+      "Megas", "Medidor", "Solicitação", "Status", "Data"
+    ]],
+    body: dados,
+    theme: "grid",
+    styles: {
+      fontSize: 9,
+      cellPadding: 3,
+      halign: "center",
+      valign: "middle"
+    },
+    headStyles: {
+      fillColor: [52, 152, 219],
+      textColor: [255, 255, 255],
+      fontStyle: "bold"
+    },
+    alternateRowStyles: { fillColor: [245, 245, 245] }
+  });
 
-docPDF.save(`relatorio_aparelhos_tecnologicos_${Date.now()}.pdf`);
-toast("✅ PDF gerado.", "success");
-
+  docPDF.save(`relatorio_aparelhos_tecnologicos_${Date.now()}.pdf`);
+  toast("✅ PDF gerado.", "success");
 });
 
 // -----------------------------
@@ -365,8 +346,3 @@ toast("✅ PDF gerado.", "success");
 // -----------------------------
 carregarConsulta();
 carregarClassificacao();
-
-
-
-
-
