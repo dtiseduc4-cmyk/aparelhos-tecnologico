@@ -53,6 +53,10 @@
           O <strong>Parque Tecnológico das Escolas</strong> tem como objetivo monitorar e gerenciar os equipamentos tecnológicos 
           das instituições educacionais, garantindo uma infraestrutura moderna e eficiente.
         </p>
+        <p>
+          Aqui, você pode realizar o <strong>cadastro</strong> de equipamentos, consultar registros e acompanhar o 
+          <strong>status das solicitações</strong> em tempo real.
+        </p>
         <button id="btnAcessarSistema">Acessar o Sistema</button>
       </div>
     </section>
@@ -90,7 +94,6 @@
             <input type="text" id="provedor" name="provedor" placeholder="Digite o nome do provedor">
           </div>
 
-          <!-- 🔧 Novo campo: Tipo de Conexão -->
           <div class="form-group">
             <label for="tipoConexao">🔧 Tipo de Conexão</label>
             <select id="tipoConexao" name="tipoConexao" required>
@@ -139,6 +142,7 @@
       <div class="actions-top">
         <button id="btnExportar">📄 Exportar PDF</button>
       </div>
+
       <div id="resumoConsulta" class="resumo">
         <p><strong>Escolas Cadastradas:</strong> <span id="totalEscolas">0</span></p>
         <p><strong>Status Pendentes:</strong> <span id="totalPendentes">0</span></p>
