@@ -53,10 +53,6 @@
           O <strong>Parque Tecnológico das Escolas</strong> tem como objetivo monitorar e gerenciar os equipamentos tecnológicos 
           das instituições educacionais, garantindo uma infraestrutura moderna e eficiente.
         </p>
-        <p>
-          Aqui, você pode realizar o <strong>cadastro</strong> de equipamentos, consultar registros e acompanhar o 
-          <strong>status das solicitações</strong> em tempo real.
-        </p>
         <button id="btnAcessarSistema">Acessar o Sistema</button>
       </div>
     </section>
@@ -94,21 +90,20 @@
             <input type="text" id="provedor" name="provedor" placeholder="Digite o nome do provedor">
           </div>
 
+          <!-- 🔧 Novo campo: Tipo de Conexão -->
           <div class="form-group">
-    <label for="tipoConexao">🔧 Tipo de Conexão</label>
-    <select id="tipoConexao" name="tipoConexao">
-    < option value="">Selecione...</option>
-    <option value="Fibra">Fibra</option>
-    <option value="Cabo">Cabo</option>
-    </select>
-     </div>
+            <label for="tipoConexao">🔧 Tipo de Conexão</label>
+            <select id="tipoConexao" name="tipoConexao" required>
+              <option value="">Selecione...</option>
+              <option value="Fibra">Fibra</option>
+              <option value="Cabo">Cabo</option>
+            </select>
+          </div>
 
-          
           <div class="form-group">
-          <label for="megas">⚙️ Quantos Megas</label>
-          <input type="number" id="megas" name="megas" min="0" placeholder="Ex: 200">
-           </div>
-
+            <label for="megas">⚙️ Quantos Megas</label>
+            <input type="number" id="megas" name="megas" min="0" placeholder="Ex: 200">
+          </div>
 
           <div class="form-group">
             <label for="medidor">⚡ Medidor Instalado</label>
@@ -141,13 +136,13 @@
     <!-- Página 2: Consulta -->
     <section id="paginaConsulta" class="pagina">
       <h2>Consulta de Registros</h2>
-       <div class="actions-top">
-    <button id="btnExportar">📄 Exportar PDF</button>
-  </div>
+      <div class="actions-top">
+        <button id="btnExportar">📄 Exportar PDF</button>
+      </div>
       <div id="resumoConsulta" class="resumo">
-  <p><strong>Escolas Cadastradas:</strong> <span id="totalEscolas">0</span></p>
-  <p><strong>Status Pendentes:</strong> <span id="totalPendentes">0</span></p>
-   </div>
+        <p><strong>Escolas Cadastradas:</strong> <span id="totalEscolas">0</span></p>
+        <p><strong>Status Pendentes:</strong> <span id="totalPendentes">0</span></p>
+      </div>
 
       <input type="text" id="pesquisaConsulta" placeholder="Pesquisar...">
 
@@ -159,6 +154,7 @@
             <th>Switchs</th>
             <th>Leitores</th>
             <th>Provedor</th>
+            <th>Tipo de Conexão</th>
             <th>Megas</th>
             <th>Medidor</th>
             <th>Solicitação</th>
@@ -169,8 +165,6 @@
         </thead>
         <tbody></tbody>
       </table>
-
-    
     </section>
 
     <!-- Página 3: Classificação -->
@@ -200,7 +194,3 @@
   <script type="module" src="script.js"></script>
 </body>
 </html>
-
-
-
-
