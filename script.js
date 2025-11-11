@@ -167,22 +167,24 @@ async function carregarConsulta() {
 
       const createdAt = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate().toLocaleString() : "";
 
-      tr.innerHTML = `
-        <td>${d.nomeEscola || ""}</td>
-        <td>${d.roteadores ?? ""}</td>
-        <td>${d.switchs ?? ""}</td>
-        <td>${d.leitores ?? ""}</td>
-        <td>${d.provedor || ""}</td>
-        <td>${d.megas || ""}</td> 
-        <td>${d.medidor || ""}</td>
-        <td style="max-width:240px;white-space:pre-wrap">${d.solicitacao || ""}</td>
-        <td class="${corClass}">${d.status || ""}</td>
-        <td>${createdAt}</td>
-        <td>
-          <button class="action-btn" data-action="edit" data-id="${id}">Editar</button>
-          <button class="action-btn" data-action="delete" data-id="${id}">Excluir</button>
-        </td>
-      `;
+     tr.innerHTML = `
+  <td>${d.nomeEscola || ""}</td>
+  <td>${d.roteadores ?? ""}</td>
+  <td>${d.switchs ?? ""}</td>
+  <td>${d.leitores ?? ""}</td>
+  <td>${d.provedor || ""}</td>
+  <td>${d.tipoConexao || ""}</td>
+  <td>${d.megas || ""}</td>
+  <td>${d.medidor || ""}</td>
+  <td style="max-width:240px;white-space:pre-wrap">${d.solicitacao || ""}</td>
+  <td class="${corClass}">${d.status || ""}</td>
+  <td>${createdAt}</td>
+  <td>
+    <button class="action-btn" data-action="edit" data-id="${id}">Editar</button>
+    <button class="action-btn" data-action="delete" data-id="${id}">Excluir</button>
+  </td>
+`;
+
       tabelaConsultaBody.appendChild(tr);
     });
 
@@ -363,6 +365,7 @@ toast("✅ PDF gerado.", "success");
 // -----------------------------
 carregarConsulta();
 carregarClassificacao();
+
 
 
 
